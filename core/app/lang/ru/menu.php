@@ -1,0 +1,30 @@
+<?php
+return array(
+    'articles' => 'Артикли',
+    'home' => 'Домой',
+
+    'categories' => 'Категории',
+    'contents' => 'Содеражние',
+    'pages' => 'Страницы',
+    'all_pages' => 'Все страницы',
+    'add_pages' => 'Добавить страницу',
+    'add_new' => 'Добавить',
+    'users' => 'Пользователи',
+    'all_users' => 'Все пользователи',
+    'all_materials' => 'Все продукты',
+    'materilas' => 'Продукты',
+    'all_events' => 'Все события',
+    'events' => 'События',
+    'all_products_groups' => 'Группы(для продуктов)',
+    'properties' => 'Свойства',
+    'storage' => 'Склады',
+    'operations' => 'Операции',
+    'add_operation' => 'Новая операция',
+    'measures' => 'Список размерностей',
+    'properties_list' => 'Список свойств',
+    'roles' => 'Группы',
+    'permissions' => 'Разрешения(права)',
+    'settings' => 'Настройки',
+    'materials' => 'Продукты',
+    'logout' => 'Выйти'
+);
