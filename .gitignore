@@ -1,0 +1,10 @@
+/core/bootstrap/compiled.php
+/core/app/config/database.php
+/core/app/storage/cache
+composer.phar
+composer.lock
+.idea
+.env.*.php
+.env.php
+.DS_Store
+Thumbs.db
