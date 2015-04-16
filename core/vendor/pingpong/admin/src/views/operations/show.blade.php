@@ -3,14 +3,14 @@
 <script type="text/javascript">
     var printData = function(id)
     {
-        var printing_css='<link rel="stylesheet" href="http://<?=$_SERVER['HTTP_HOST']?>/packages/pingpong/admin/css/bootstrap.min.css"/>';
+        var printing_css='<link rel="stylesheet" media="all" href="http://<?=$_SERVER['HTTP_HOST']?>/packages/pingpong/admin/css/bootstrap.min.css"/>';
         var divToPrint=document.getElementById("printTable_"+id);
         newWin= window.open("");
         var html = printing_css+divToPrint.outerHTML;
         console.log(html);
         newWin.document.write(html);
-        newWin.print();
-        newWin.close();
+//        newWin.print();
+//        newWin.close();
     };
 </script>
 <h2>Операции</h2>
