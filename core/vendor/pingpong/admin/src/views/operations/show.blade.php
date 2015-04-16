@@ -9,7 +9,6 @@
         var html = printing_css+divToPrint.outerHTML;
         console.log(html);
         newWin.document.write(html);
-        newWin.print();
         //newWin.close();
     };
 </script>
