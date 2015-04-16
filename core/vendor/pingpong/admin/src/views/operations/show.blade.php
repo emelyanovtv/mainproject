@@ -17,6 +17,9 @@
         }
     })()
 </script>
+<style>
+    p {margin: 0px}
+</style>
 <h2>Операции</h2>
 {{ Form::open(['files' => true, 'method' => 'GET', 'route' => 'admin.operations.showoperations']) }}
 <div class="form-group">
