@@ -16,7 +16,6 @@
 | loading of any our classes "manually". Feels great to relax.
 |
 */
-die('asd');
 require __DIR__.'/../bootstrap/autoload.php';
 
 /*
