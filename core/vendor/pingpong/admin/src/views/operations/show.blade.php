@@ -131,15 +131,15 @@
                                                 -{{$event['data']['value']}}
                                             </td>
                                         </tr>
-<!--                                        @if(isset($event['data']['event_data']) && count($event['data']['event_data']['properties']))-->
-<!--                                            @foreach($event['data']['event_data']['properties'] as $propVal)-->
-<!--                                            <tr>-->
-<!--                                                <td>{{$propVal['property']['name']}}</td>-->
-<!--                                                <td>&nbsp:&nbsp</td>-->
-<!--                                                <td>{{$propVal['property']['value']}}</td>-->
-<!--                                            </tr>-->
-<!--                                            @endforeach-->
-<!--                                        @endif-->
+                                        @if(isset($event['data']['event_data']) && count($event['data']['event_data']['properties']))
+                                            @foreach($event['data']['event_data']['properties'] as $propVal)
+                                            <tr>
+                                                <td>{{$propVal['property']['name']}}</td>
+                                                <td>&nbsp:&nbsp</td>
+                                                <td>{{$propVal['property']['value']}}</td>
+                                            </tr>
+                                            @endforeach
+                                        @endif
                                     @endforeach
                                     </table>
                                 </td>
