@@ -3,14 +3,15 @@
 <script type="text/javascript">
     var printData = function(id)
     {
-        var printing_css='<link rel="stylesheet" media="all" href="http://<?=$_SERVER['HTTP_HOST']?>/packages/pingpong/admin/css/bootstrap.min.css"/>';
-        printing_css+='<link rel="stylesheet" media="all" href="http://<?=$_SERVER['HTTP_HOST']?>/packages/pingpong/admin/css/default.css"/>';
+
         var divToPrint=document.getElementById("printTable_"+id);
+        var printing_css='<link rel="stylesheet" media="all" href="http://<?=$_SERVER['HTTP_HOST']?>/packages/pingpong/admin/css/bootstrap.min.css"/>';
+        printing_css+='<link rel="stylesheet" media="all" href="http://<?=$_SERVER['HTTP_HOST']?>/packages/pingpong/admin/css/default.css"/><style>body, html {width: '+$("#printTable_" + id + " .table.table-bordered").width()+'px}</style>';
         newWin= window.open("");
-        var html = printing_css+divToPrint.outerHTML;
-        console.log(html);
+        var html = printing_css+divToPrint.innerHTML;
+        //console.log(divToPrint.innerHTML);
         newWin.document.write(html);
-        setTimeout('newWin.print();newWin.close();', 1000)
+        setTimeout('newWin.print();newWin.close();', 1000);
 
 //        newWin.print();
 //        newWin.close();
