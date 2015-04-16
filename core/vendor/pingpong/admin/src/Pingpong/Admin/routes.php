@@ -13,7 +13,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Pingpong\Admin\Controllers'],
 		Route::get('/logout',   ['as' => 'admin.logout',    'uses' => 'SiteController@logout']);
 		
 		// settings
-		Route::get('operations/showoperations',  ['as' => 'admin.operations.showoperations',  'uses' => 'OperationsController@showoperations']);
+		Route::get('operations/showoperations', 'OperationsController@showoperations');
         Route::get('settings',  ['as' => 'admin.settings',  'uses' => 'SiteController@settings']);
 		Route::post('settings', ['as' => 'admin.settings.update',  'uses' => 'SiteController@updateSettings']);
 
