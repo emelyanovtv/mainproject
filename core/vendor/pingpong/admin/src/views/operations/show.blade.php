@@ -69,7 +69,7 @@
                         @if(count($product['events']))
                             @if($i < 10)
                                 @if(isset($product['events'][$dateStr.'-0'.$i]['+']))
-                                    <td class="success" width="200px">
+                                    <td class="success">
                                         @foreach($product['events'][$dateStr.'-0'.$i]['+'] as $event)
                                                     {{$event['data']['event_data']['name']}}+{{$event['data']['value']}}
                                                     <br/>
@@ -80,7 +80,6 @@
                                             @endif
 
                                         @endforeach
-                                        </table>
                                     </td>
                                 @else
                                     <td class="success"></td>
@@ -119,7 +118,6 @@
                                                 @endforeach
                                             @endif
                                         @endforeach
-                                        </table>
                                     </td>
                                 @else
                                     <td class="danger"></td>
