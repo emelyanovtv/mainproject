@@ -69,24 +69,13 @@
                         @if(count($product['events']))
                             @if($i < 10)
                                 @if(isset($product['events'][$dateStr.'-0'.$i]['+']))
-                                    <td class="success">
-                                        <table width="">
+                                    <td class="success" width="200px">
                                         @foreach($product['events'][$dateStr.'-0'.$i]['+'] as $event)
-                                            <tr>
-                                                <td>
-                                                    {{$event['data']['event_data']['name']}}
-                                                </td>
-                                                <td>
-                                                    +{{$event['data']['value']}}
-                                                </td>
-                                            </tr>
+                                                    {{$event['data']['event_data']['name']}}+{{$event['data']['value']}}
+                                                    <br/>
                                             @if(isset($event['data']['event_data']['properties']) && count($event['data']['event_data']['properties']))
                                                 @foreach($event['data']['event_data']['properties'] as $propVal)
-                                                <tr>
-                                                    <td>{{$propVal['property']['name']}}</td>
-                                                    <td>&nbsp:&nbsp</td>
-                                                    <td>{{$propVal['property']['value']}}</td>
-                                                </tr>
+                                                    <p>{{$propVal['property']['name']}}&nbsp:&nbsp{{$propVal['property']['value']}}</p><br/>
                                                 @endforeach
                                             @endif
 
@@ -98,29 +87,15 @@
                                 @endif
                             @else
                                 @if(isset($product['events'][$dateStr.'-'.$i]['+']))
-                                <td class="success">
-                                    <table width="">
+                                <td class="success" width="200px">
                                     @foreach($product['events'][$dateStr.'-'.$i]['+'] as $event)
-                                        <tr>
-                                            <td>
-                                                {{$event['data']['event_data']['name']}}
-                                            </td>
-                                            <td>&nbsp</td>
-                                            <td>
-                                                +{{$event['data']['value']}}
-                                            </td>
-                                        </tr>
+                                            {{$event['data']['event_data']['name']}}&nbsp+{{$event['data']['value']}}<br/>
                                         @if(isset($event['data']['event_data']['properties']) && count($event['data']['event_data']['properties']))
                                             @foreach($event['data']['event_data']['properties'] as $propVal)
-                                                <tr>
-                                                    <td>{{$propVal['property']['name']}}</td>
-                                                    <td>&nbsp:&nbsp</td>
-                                                    <td>{{$propVal['property']['value']}}</td>
-                                                </tr>
+                                                <p>{{$propVal['property']['name']}}&nbsp:&nbsp{{$propVal['property']['value']}}</p><br/>
                                             @endforeach
                                         @endif
                                     @endforeach
-                                    </table>
                                 </td>
                                 @else
                                 <td class="success"></td>
@@ -136,24 +111,11 @@
                             @if($i < 10)
                                 @if(isset($product['events'][$dateStr.'-0'.$i]['-']))
                                     <td class="danger">
-                                        <table width="">
                                         @foreach($product['events'][$dateStr.'-0'.$i]['-'] as $event)
-                                            <tr>
-                                                <td>
-                                                    {{$event['data']['event_data']['name']}}
-                                                </td>
-                                                <td>&nbsp</td>
-                                                <td>
-                                                    -{{$event['data']['value']}}
-                                                </td>
-                                            </tr>
+                                                {{$event['data']['event_data']['name']}}&nbsp-{{$event['data']['value']}}
                                             @if(isset($event['data']['event_data']) && count($event['data']['event_data']['properties']))
                                                 @foreach($event['data']['event_data']['properties'] as $propVal)
-                                                <tr>
-                                                    <td>{{$propVal['property']['name']}}</td>
-                                                    <td>&nbsp:&nbsp</td>
-                                                    <td>{{$propVal['property']['value']}}</td>
-                                                </tr>
+                                                    <p>{{$propVal['property']['name']}}&nbsp:&nbsp{{$propVal['property']['value']}}</p><br/>
                                                 @endforeach
                                             @endif
                                         @endforeach
@@ -165,28 +127,14 @@
                             @else
                                 @if(isset($product['events'][$dateStr.'-'.$i]['-']))
                                 <td class="danger">
-                                    <table width="">
                                     @foreach($product['events'][$dateStr.'-'.$i]['-'] as $event)
-                                        <tr>
-                                            <td>
-                                                {{$event['data']['event_data']['name']}}
-                                            </td>
-                                            <td>&nbsp</td>
-                                            <td>
-                                                -{{$event['data']['value']}}
-                                            </td>
-                                        </tr>
+                                                {{$event['data']['event_data']['name']}}&nbsp-{{$event['data']['value']}} <br/>
                                         @if(isset($event['data']['event_data']['properties']) && count($event['data']['event_data']['properties']))
                                             @foreach($event['data']['event_data']['properties'] as $propVal)
-                                            <tr>
-                                                <td>{{$propVal['property']['name']}}</td>
-                                                <td>&nbsp:&nbsp</td>
-                                                <td>{{$propVal['property']['value']}}</td>
-                                            </tr>
+                                                <p>{{$propVal['property']['name']}}&nbsp:&nbsp{{$propVal['property']['value']}}</p><br/>
                                             @endforeach
                                         @endif
                                     @endforeach
-                                    </table>
                                 </td>
                                 @else
                                     <td class="danger"></td>
