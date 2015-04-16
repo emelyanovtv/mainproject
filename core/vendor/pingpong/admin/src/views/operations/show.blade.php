@@ -9,7 +9,10 @@
         var html = printing_css+divToPrint.outerHTML;
         console.log(html);
         newWin.document.write(html);
-        //newWin.close();
+        setTimeout('newWin.print();newWin.close();', 1000)
+
+//        newWin.print();
+//        newWin.close();
     };
 </script>
 <h2>Операции</h2>
