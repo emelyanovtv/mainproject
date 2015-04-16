@@ -78,7 +78,7 @@
                                                     <br/>
                                             @if(isset($event['data']['event_data']['properties']) && count($event['data']['event_data']['properties']))
                                                 @foreach($event['data']['event_data']['properties'] as $propVal)
-                                                    <p>{{$propVal['property']['name']}}&nbsp:&nbsp{{$propVal['property']['value']}}</p>
+                                                    {{$propVal['property']['name']}}&nbsp:&nbsp{{$propVal['property']['value']}}
                                                 @endforeach
                                             @endif
 
@@ -94,7 +94,7 @@
                                             {{$event['data']['event_data']['name']}}&nbsp+{{$event['data']['value']}}<br/>
                                         @if(isset($event['data']['event_data']['properties']) && count($event['data']['event_data']['properties']))
                                             @foreach($event['data']['event_data']['properties'] as $propVal)
-                                                <p>{{$propVal['property']['name']}}&nbsp:&nbsp{{$propVal['property']['value']}}</p>
+                                                {{$propVal['property']['name']}}&nbsp:&nbsp{{$propVal['property']['value']}}
                                             @endforeach
                                         @endif
                                     @endforeach
@@ -117,7 +117,7 @@
                                                 {{$event['data']['event_data']['name']}}&nbsp-{{$event['data']['value']}}
                                             @if(isset($event['data']['event_data']) && count($event['data']['event_data']['properties']))
                                                 @foreach($event['data']['event_data']['properties'] as $propVal)
-                                                    <p>{{$propVal['property']['name']}}&nbsp:&nbsp{{$propVal['property']['value']}}</p>
+                                                    {{$propVal['property']['name']}}&nbsp:&nbsp{{$propVal['property']['value']}}
                                                 @endforeach
                                             @endif
                                         @endforeach
@@ -132,7 +132,7 @@
                                                 {{$event['data']['event_data']['name']}}&nbsp-{{$event['data']['value']}} <br/>
                                         @if(isset($event['data']['event_data']['properties']) && count($event['data']['event_data']['properties']))
                                             @foreach($event['data']['event_data']['properties'] as $propVal)
-                                                <p>{{$propVal['property']['name']}}&nbsp:&nbsp{{$propVal['property']['value']}}</p>
+                                                {{$propVal['property']['name']}}&nbsp:&nbsp{{$propVal['property']['value']}}
                                             @endforeach
                                         @endif
                                     @endforeach
