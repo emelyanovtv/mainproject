@@ -4,6 +4,7 @@
     var printData = function(id)
     {
         var printing_css='<link rel="stylesheet" media="all" href="http://<?=$_SERVER['HTTP_HOST']?>/packages/pingpong/admin/css/bootstrap.min.css"/>';
+        printing_css+='<link rel="stylesheet" media="all" href="http://<?=$_SERVER['HTTP_HOST']?>/packages/pingpong/admin/css/default.css"/>';
         var divToPrint=document.getElementById("printTable_"+id);
         newWin= window.open("");
         var html = printing_css+divToPrint.outerHTML;
