@@ -121,7 +121,7 @@
                             @if(isset($product['events'][$dateStr.'-0'.$i]['+']))
                                 <td class="danger">
                                     <table width="200px">
-                                    @foreach($product['events'][$dateStr.'-0'.$i]['-'] as $event)
+                                    @foreach($product['events'][$dateStr.'-0'.$i]['+'] as $event)
                                         <tr>
                                             <td>
                                                 {{$event['data']['event_data']['name']}}
