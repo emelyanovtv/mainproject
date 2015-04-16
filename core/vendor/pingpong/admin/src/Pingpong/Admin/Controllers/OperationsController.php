@@ -232,6 +232,7 @@ class OperationsController extends BaseController {
         }
         $data = compact('storages_list', 'materials_storage','dateStr','dayInMonth','storagesArrData');
         $data = array_merge($data, $dataPlus);
+        echo "<pre>";var_dump($data);echo "</pre>";die();
         return $this->view('operations.show', $data);
 
     }
