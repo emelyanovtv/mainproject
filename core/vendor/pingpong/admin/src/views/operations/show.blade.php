@@ -10,7 +10,7 @@
         console.log(html);
         newWin.document.write(html);
         newWin.print();
-        newWin.close();
+        //newWin.close();
     };
 </script>
 <h2>Операции</h2>
