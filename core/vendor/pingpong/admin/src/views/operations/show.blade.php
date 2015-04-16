@@ -70,7 +70,7 @@
                             @if($i < 10)
                                 @if(isset($product['events'][$dateStr.'-0'.$i]['+']))
                                     <td class="success">
-                                        <table width="200px">
+                                        <table width="">
                                         @foreach($product['events'][$dateStr.'-0'.$i]['+'] as $event)
                                             <tr>
                                                 <td>
@@ -99,7 +99,7 @@
                             @else
                                 @if(isset($product['events'][$dateStr.'-'.$i]['+']))
                                 <td class="success">
-                                    <table width="200px">
+                                    <table width="">
                                     @foreach($product['events'][$dateStr.'-'.$i]['+'] as $event)
                                         <tr>
                                             <td>
@@ -136,7 +136,7 @@
                             @if($i < 10)
                                 @if(isset($product['events'][$dateStr.'-0'.$i]['-']))
                                     <td class="danger">
-                                        <table width="200px">
+                                        <table width="">
                                         @foreach($product['events'][$dateStr.'-0'.$i]['-'] as $event)
                                             <tr>
                                                 <td>
@@ -165,7 +165,7 @@
                             @else
                                 @if(isset($product['events'][$dateStr.'-'.$i]['-']))
                                 <td class="danger">
-                                    <table width="200px">
+                                    <table width="">
                                     @foreach($product['events'][$dateStr.'-'.$i]['-'] as $event)
                                         <tr>
                                             <td>
