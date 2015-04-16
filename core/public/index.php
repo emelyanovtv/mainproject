@@ -5,7 +5,6 @@
  * @package  Laravel
  * @author   Taylor Otwell <taylorotwell@gmail.com>
  */
-
 /*
 |--------------------------------------------------------------------------
 | Register The Auto Loader
@@ -17,7 +16,7 @@
 | loading of any our classes "manually". Feels great to relax.
 |
 */
-
+die('asd');
 require __DIR__.'/../bootstrap/autoload.php';
 
 /*
