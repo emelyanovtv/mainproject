@@ -1,21 +1,21 @@
 @extends('admin::layouts.master')
 @section('content')
 <script type="text/javascript">
-    var printData = function(id)
-    {
+    var tableToExcel = (function () {
+        var uri = 'data:application/vnd.ms-excel;base64,'
+            , template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>'
+            , base64 = function (s) { return window.btoa(unescape(encodeURIComponent(s))) }
+            , format = function (s, c) { return s.replace(/{(\w+)}/g, function (m, p) { return c[p]; }) }
+        return function (id, name, filename) {
+            var table  = document.getElementById("printTable_"+id);
+            var ctx = { worksheet: name || 'Worksheet', table: table.innerHTML }
 
-        var divToPrint=document.getElementById("printTable_"+id);
-        var printing_css='<link rel="stylesheet" media="all" href="http://<?=$_SERVER['HTTP_HOST']?>/packages/pingpong/admin/css/bootstrap.min.css"/>';
-        printing_css+='<link rel="stylesheet" media="all" href="http://<?=$_SERVER['HTTP_HOST']?>/packages/pingpong/admin/css/default.css"/><style>body, html {width: '+$("#printTable_" + id + " .table.table-bordered").width()+'px}</style>';
-        newWin= window.open("");
-        var html = printing_css+divToPrint.innerHTML;
-        //console.log(divToPrint.innerHTML);
-        newWin.document.write(html);
-        setTimeout('newWin.print();newWin.close();', 1000);
+            document.getElementById("dlink_"+id).href = uri + base64(format(template, ctx));
+            document.getElementById("dlink_"+id).download = filename;
+            document.getElementById("dlink_"+id).click();
 
-//        newWin.print();
-//        newWin.close();
-    };
+        }
+    })()
 </script>
 <h2>Операции</h2>
 {{ Form::open(['files' => true, 'method' => 'GET', 'route' => 'admin.operations.showoperations']) }}
@@ -39,8 +39,8 @@
 <div class="dataTableFormStorage">
    @foreach($storagesArrData as $st_id => $storage)
     <h2>Cклад : <span class="error">{{$storage['data']['name']}}</span></h2>
-    <div id="printTable_{{$st_id}}">
-        <table class="table table-bordered">
+    <a id="dlink_{{$st_id}}"  style="display:none;"></a>
+        <table class="table table-bordered" id="printTable_{{$st_id}}">
             <tr class="info">
                 <td>Название продукта:</td>
                 <td>Остаток на начало:</td>
@@ -202,8 +202,7 @@
             @endforeach
         @endif
         </table>
-    </div>
-    <button onclick="printData({{$st_id}});" class="btn btn-lg btn-info">Распечечатать</button>
+    <button onclick="tableToExcel({{$st_id}}, 'name', 'myfile.xls');" class="btn btn-lg btn-info">Сохранить в exel</button>
    @endforeach
 </div>
 @endif
