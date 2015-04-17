@@ -271,10 +271,11 @@ class OperationsController extends BaseController {
             {
                 foreach($storage->hasMaterials as $data)
                 {
-                    $materials_storage[$storage->id][$data->materials->materialsgroup->name][$data->materials->materialsgroup->id] = $data->materials->name;
+                    $materials_storage[$storage->id][$data->materials->materialsgroup->name][$data->materials->id] = $data->materials->name;
                 }
             }
         }
+
 
         $events = $events->toArray();
         $new_events = array();
