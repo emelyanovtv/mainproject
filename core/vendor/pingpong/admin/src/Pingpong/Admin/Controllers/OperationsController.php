@@ -232,6 +232,7 @@ class OperationsController extends BaseController {
         }
         $data = compact('storages_list', 'materials_storage','dateStr','dayInMonth','storagesArrData');
         $data = array_merge($data, $dataPlus);
+
         return $this->view('operations.show', $data);
 
     }
@@ -270,7 +271,7 @@ class OperationsController extends BaseController {
             {
                 foreach($storage->hasMaterials as $data)
                 {
-                    $materials_storage[$storage->id][$data->materials->id] = $data->materials->name;
+                    $materials_storage[$storage->id][$data->materials->materialsgroup->name][$data->materials->materialsgroup->id] = $data->materials->name;
                 }
             }
         }
