@@ -58,7 +58,7 @@ class OperationsController extends BaseController {
                 foreach($storage->hasMaterials as $data)
                 {
                     $materials_storage[$storage->id][null] = "Нет";
-                    $materials_storage[$storage->id][$data->materials->id] = $data->materials->name;
+                    $materials_storage[$storage->id][$data->materials->materialsgroup->name][$data->materials->id] = $data->materials->name;
                 }
             }
         }
