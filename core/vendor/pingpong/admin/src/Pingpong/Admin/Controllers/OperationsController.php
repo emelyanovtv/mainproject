@@ -29,6 +29,13 @@ class OperationsController extends BaseController {
         return $this->view('operations.index');
 	}
 
+    private static function cmpArr($a, $b) {
+        if ((int) $a['materials']['materialsgroup']['id'] == (int) $b['materials']['materialsgroup']['id']) {
+            return 0;
+        }
+        return ((int) $a['materials']['materialsgroup']['id'] < (int) $b['materials']['materialsgroup']['id']) ? -1 : 1;
+    }
+
     public function showoperations($storage_id = null, $date = null, $material_id = null)
     {
         $storage_id = intval($storage_id);
@@ -61,8 +68,9 @@ class OperationsController extends BaseController {
         $dayInMonth = cal_days_in_month(CAL_GREGORIAN, $dateArr[1], $dateArr[0]);
         $storagesArrData = array();
         $dataPlus = array();
-        $list = Storages::with(array('hasMaterials.materials.materialsgroup'))->get();
-
+        $list = Storages::with(array('hasMaterials.materials.materialsgroup' => function($query) {
+                $query->orderBy('material_groups.id', 'ASC');
+            }))->get();
         if($storage_id > 0 && $material_id <= 0)
         {
 
@@ -94,7 +102,6 @@ class OperationsController extends BaseController {
             unset($storageMainData['has_materials']);
 
             $storagesArrData[$storage->id]['data'] = $storageMainData;
-
 
             if(count($storage->hasMaterials))
             {
@@ -225,17 +232,32 @@ class OperationsController extends BaseController {
                     }
 
                 }
+                if(count($products))
+                {
+                    $newProductArr = array();
+                    foreach($products as $numS => $prod)
+                    {
+                        $newProductArr[$prod['materials']['materialsgroup']['name']][$numS] = $prod;
+                    }
+
+                    $products = $newProductArr;
+                }
 
                 $storagesArrData[$storage->id]['products'] = $products;
                 unset($products, $storage['has_materials']);
             }
         }
+
         $data = compact('storages_list', 'materials_storage','dateStr','dayInMonth','storagesArrData');
+
+
         $data = array_merge($data, $dataPlus);
 
         return $this->view('operations.show', $data);
 
     }
+
+
 
 
 	/**
