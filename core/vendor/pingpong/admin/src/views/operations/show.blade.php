@@ -15,7 +15,16 @@
             document.getElementById("dlink_"+id).click();
 
         }
-    })()
+    })();
+    jQuery(document).ready(function(){
+        $('.table.table-bordered tr').click(function(){
+            $('.table.table-bordered tr').removeClass('danger').css({'border':''});
+
+            $(this).addClass('danger').css({'border':'2px solid red'});
+        });
+    });
+
+
 </script>
 <style>
     p {margin: 0px}
@@ -39,11 +48,11 @@
 {{ Form::close() }}
 
 @if(isset($dayInMonth) && (isset($storagesArrData) && count($storagesArrData)))
-<div class="dataTableFormStorage">
+<div class="dataTableFormStorage table-responsive">
    @foreach($storagesArrData as $st_id => $storage)
     <h2>Cклад : <span class="error">{{$storage['data']['name']}}</span></h2>
     <a id="dlink_{{$st_id}}"  style="display:none;"></a>
-        <table class="table table-bordered" id="printTable_{{$st_id}}">
+        <table class="table table-bordered" id="printTable_{{$st_id}}" style="border: 2px solid #000000">
             <thead>
                 <tr class="info">
                     <td>Название продукта:</td>
