@@ -44,24 +44,26 @@
     <h2>Cклад : <span class="error">{{$storage['data']['name']}}</span></h2>
     <a id="dlink_{{$st_id}}"  style="display:none;"></a>
         <table class="table table-bordered" id="printTable_{{$st_id}}">
-            <tr class="info">
-                <td>Название продукта:</td>
-                <td>Остаток на начало:</td>
-                <td align="center" colspan="{{$dayInMonth}}">Приход</td>
-                <td align="center" colspan="{{$dayInMonth}}">Расход</td>
-                <td>Остаток на конец:</td>
-            </tr>
-            <tr>
-                <td class="warning"></td>
-                <td class="warning"></td>
-                @for($i = 1; $i <= $dayInMonth; $i++)
+            <thead>
+                <tr class="info">
+                    <td>Название продукта:</td>
+                    <td>Остаток на начало:</td>
+                    <td align="center" colspan="{{$dayInMonth}}">Приход</td>
+                    <td align="center" colspan="{{$dayInMonth}}">Расход</td>
+                    <td>Остаток на конец:</td>
+                </tr>
+                <tr>
+                    <td class="warning"></td>
+                    <td class="warning"></td>
+                    @for($i = 1; $i <= $dayInMonth; $i++)
                     <td align="center" class="success">{{$i}}</td>
-                @endfor
-                @for($i = 1; $i <= $dayInMonth; $i++)
-                <td align="center" class="danger">{{$i}}</td>
-                @endfor
-                <td class="warning"></td>
-            </tr>
+                    @endfor
+                    @for($i = 1; $i <= $dayInMonth; $i++)
+                    <td align="center" class="danger">{{$i}}</td>
+                    @endfor
+                    <td class="warning"></td>
+                </tr>
+            </thead>
         @if(isset($storage['products']) && count($storage['products']))
             @foreach($storage['products'] as $type => $products)
             <tr><td colspan="{{$dayInMonth*2}}"><h2>{{$type}}</h2></td></tr>
