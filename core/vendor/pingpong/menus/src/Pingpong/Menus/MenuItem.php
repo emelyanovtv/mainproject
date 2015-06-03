@@ -1,5 +1,6 @@
 <?php namespace Pingpong\Menus;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\HTML;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Request;
@@ -35,6 +36,39 @@ class MenuItem implements ArrayableInterface
 	 */
 	public function __construct($properties = array())
 	{
+//        if(isset($properties['route']))
+//        {
+//
+//            $uri = Route::getRoutes()->getByName($properties['route'][0])->getUri();
+//            $rules = Auth::user()->getAttribute('rules');
+//            $arrUrl = explode(DIRECTORY_SEPARATOR, $uri);
+//            if(count($arrUrl) > 2)
+//                $uri = $arrUrl[0].DIRECTORY_SEPARATOR.$arrUrl[1];
+//            else
+//                $uri = implode(DIRECTORY_SEPARATOR, $arrUrl);
+//
+//            foreach($rules as $rule)
+//            {
+//                if(is_array($rule['key']))
+//                {
+//                    if(in_array($uri, $rule['key']))
+//                    {
+//                        if(!Auth::user()->can($rule['value']))
+//                            $this->properties = null;
+//                    }
+//                }
+//                else
+//                {
+//                    if($uri == $rule['key'])
+//                    {
+//                        if(!Auth::user()->can($rule['value']))
+//                            $this->properties = null;
+//                    }
+//                    //string
+//                }
+//            }
+//
+//        }
 		$this->properties = $properties;
 		$this->fill($properties);
 	}
@@ -70,13 +104,56 @@ class MenuItem implements ArrayableInterface
         return substr(md5(array_get($attributes, 'title', str_random(6))), 0, 5);
     }
 
+    public function isHasAccess()
+    {
+        if(Auth::check())
+        {
+            $user = Auth::user();
+            $rules = $user->getAttribute('rules');
+
+            if(isset($this->properties['route'][0]))
+            {
+                foreach($rules as $rule)
+                {
+                    if(is_int(strpos($this->properties['route'][0], $rule['route'])))
+                    {
+                        return $user->can($rule['value']);
+                        break;
+                    }
+                }
+            }
+
+            elseif(is_array($this->childs) && count($this->childs))
+            {
+                foreach($this->childs as $child)
+                {
+                    if(isset($child->properties['route'][0]))
+                    {
+                        foreach($rules as $rule)
+                        {
+                            if(is_int(strpos($child->properties['route'][0], $rule['route'])))
+                            {
+                                return $user->can($rule['value']);
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+
+
+        return true;
+    }
+
     /**
      * Create new static instance.
      *
      * @param array $properties
      * @return static
      */
-    public static function make(array $properties)
+    public static function  make(array $properties)
     {
         $properties = self::setIconIfDefinedInAttributes($properties);
 
