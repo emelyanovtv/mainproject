@@ -26,7 +26,7 @@
 <body>
 	@include('admin::partials.flashes')
 	
-	@if(Auth::check() && Auth::user()->isAdmin())
+	@if(Auth::check())
 		@include('admin::partials.header')
 	@endif
 
