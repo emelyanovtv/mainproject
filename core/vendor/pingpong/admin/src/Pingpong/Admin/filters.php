@@ -3,7 +3,7 @@
 Route::filter('admin.auth', function()
 {
 
-    if( ! Auth::check() or (! Auth::user()->is('admin')))
+    if( ! Auth::check() or (! Auth::user()->is('admin') && !Auth::user()->is('designer')))
     {
         Auth::logout();
         return Redirect::route('admin.login.index');
