@@ -3,7 +3,6 @@
 if(Auth::check())
 {
 	Trusty::setView('admin::403');
-
 	try
 	{
 		Trusty::registerPermissions();
@@ -12,20 +11,28 @@ if(Auth::check())
 	{
 		
 	}
-	Trusty::when(['admin/users', 'admin/users/*'], 'manage_users');
-	Trusty::when(['admin/pages', 'admin/pages/*'], 'manage_pages');
-	Trusty::when(['admin/articles', 'admin/articles/*'], 'manage_articles');
-	Trusty::when(['admin/categories', 'admin/categories/*'], 'manage_categories');
-    Trusty::when(['admin/operations', 'admin/operations/*'], 'manage_operations');
-    Trusty::when(['admin/storage', 'admin/storage/*'], 'manage_storage');
-    Trusty::when(['admin/events', 'admin/events/*'], 'manage_events');
-    Trusty::when('admin/eventprops', 'manage_eventprops');
-    Trusty::when('admin/product', 'manage_product');
-    Trusty::when('admin/productgroups', 'manage_productgroups');
-    Trusty::when('admin/measures', 'manage_measures');
-    Trusty::when('admin/measures', 'manage_measures');
-    Trusty::when('admin/properties', 'manage_properties');
-	Trusty::when(['admin/permissions', 'admin/permissions/*'], 'manage_permissions');
-	Trusty::when(['admin/roles', 'admin/roles/*'], 'manage_roles');
-	Trusty::when('admin/settings', 'manage_settings');
+
+    $rulesAdded = [
+        ["key" => ['admin/users', 'admin/users/*'], "value" => 'manage_users', 'route' => 'admin.users'],
+        ["key" => ['admin/pages', 'admin/pages/*'], "value" => 'manage_pages', 'route' => 'admin.pages'],
+        ["key" =>  ['admin/articles', 'admin/articles/*'] , "value" => 'manage_articles', 'route' => 'admin.articles'],
+        ["key" => ['admin/categories', 'admin/categories/*'], "value" => 'manage_categories', 'route' => 'admin.categories'],
+        ["key" => ['admin/operations', 'admin/operations/*'] , "value" => 'manage_operations', 'route' => 'admin.operations'],
+        ["key" => ['admin/storage', 'admin/storage/*'] , "value" => 'manage_storage', 'route' => 'admin.storage'],
+        ["key" => ['admin/events', 'admin/events/*'] , "value" => 'manage_events', 'route' => 'admin.events'],
+        ["key" => 'admin/eventprops' , "value" => 'manage_eventprops', 'route' => 'admin.eventprops'],
+        ["key" => 'admin/product' , "value" => 'manage_product', 'route' => 'admin.product'],
+        ["key" => 'admin/productgroups' , "value" => 'manage_productgroups', 'route' => 'admin.productgroups'],
+        ["key" => 'admin/measures' , "value" => 'manage_measures', 'route' => 'admin.measures'],
+        ["key" => 'admin/properties' , "value" => 'manage_properties', 'route' => 'admin.properties'],
+        ["key" => ['admin/permissions', 'admin/permissions/*'] , "value" => 'manage_permissions', 'route' => 'admin.permissions'],
+        ["key" => ['admin/roles', 'admin/roles/*'] , "value" => 'manage_roles', 'route' => 'admin.roles'],
+        ["key" => 'admin/settings' , "value" => 'manage_settings', 'route' => 'admin.settings'],
+    ];
+
+    Auth::user()->setAttribute('rules', $rulesAdded);
+
+    foreach($rulesAdded as $rule)
+        Trusty::when($rule['key'], $rule['value']);
+
 }
