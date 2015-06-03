@@ -141,6 +141,7 @@ class Builder implements \Countable
 	 */
 	public function add(array $attributes = array())
 	{
+
         $item =  MenuItem::make($attributes);
 
         $this->items[] = $item;
@@ -164,6 +165,21 @@ class Builder implements \Countable
         $this->items[] = $item;
 
         return $this;
+    }
+
+    /*
+     * void
+     * check if user has access to menu
+     */
+    public function check()
+    {
+
+        foreach ($this->items as $num => $item)
+        {
+            if(!$item->isHasAccess())
+                unset($this->items[$num]);
+        }
+
     }
 
     /**
