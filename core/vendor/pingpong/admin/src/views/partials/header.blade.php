@@ -10,7 +10,7 @@
       </button>
       <a class="navbar-brand" href="{{ url('/') }}" target="_blank">
         {{ option('site.name', 'Administrator') }}
-      </a>
+      </a> 
     </div>
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
