@@ -109,7 +109,7 @@ class MenuItem implements ArrayableInterface
         if(Auth::check())
         {
             $user = Auth::user();
-            $rules = $user->getAttribute('rules');
+            $rules = $user->getAttribute('rulesroutes');
 
             if(isset($this->properties['route'][0]))
             {
