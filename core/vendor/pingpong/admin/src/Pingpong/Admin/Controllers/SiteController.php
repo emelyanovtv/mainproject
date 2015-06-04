@@ -1,6 +1,5 @@
 <?php namespace Pingpong\Admin\Controllers;
 
-session_start();
 
 use Pingpong\Admin\Entities\Option;
 use Pingpong\Admin\Entities\Article;
@@ -25,9 +24,9 @@ class SiteController extends BaseController
 	 */
 	public function logout()
 	{
+        unset($this->auth->user()->rulesroutes);
 		$this->auth->logout();
-		
-		unset($_SESSION['admin']);
+        $this->session->flush();
 
 		return $this->redirect('login.index');
 	}
