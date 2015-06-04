@@ -30,7 +30,7 @@ if(Auth::check())
         ["key" => 'admin/settings' , "value" => 'manage_settings', 'route' => 'admin.settings'],
     ];
 
-    Auth::user()->setAttribute('rules', $rulesAdded);
+    Auth::user()->setAttribute('rulesroutes', $rulesAdded);
 
     foreach($rulesAdded as $rule)
         Trusty::when($rule['key'], $rule['value']);
