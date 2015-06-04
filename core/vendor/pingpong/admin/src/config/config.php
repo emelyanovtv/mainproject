@@ -8,4 +8,8 @@ return [
 	'post'	=>	[
 		'view'	=>	'admin::article'
 	],
+    'custom' => [
+        'event'   =>	'13',
+        'storage' =>	'3'
+    ]
 ];
