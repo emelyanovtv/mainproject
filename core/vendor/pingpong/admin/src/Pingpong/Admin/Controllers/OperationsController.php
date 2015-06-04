@@ -4,6 +4,7 @@ namespace Pingpong\Admin\Controllers;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 use Pingpong\Admin\Entities\StorageEvents;
 use Pingpong\Admin\Entities\StorageEventsMaterials;
@@ -39,6 +40,7 @@ class OperationsController extends BaseController {
     public function showoperations($storage_id = null, $date = null, $material_id = null)
     {
         $storage_id = intval($storage_id);
+        $user = Auth::user();
         $material_id = intval($material_id);
         $dateStr = strval($date);
 
@@ -47,7 +49,7 @@ class OperationsController extends BaseController {
 
 
         //first case if we dont have not storage and material
-        $storages = Storages::all();
+        $storages = ($user->isAdmin()) ? Storages::all() : Storages::where('id',  Config::get('admin::custom.storage'))->get();
         $storages_list = array('all' => "Все") + $storages->lists("name", "id");
         $materials_storage = array();
 
@@ -68,9 +70,11 @@ class OperationsController extends BaseController {
         $dayInMonth = cal_days_in_month(CAL_GREGORIAN, $dateArr[1], $dateArr[0]);
         $storagesArrData = array();
         $dataPlus = array();
-        $list = Storages::with(array('hasMaterials.materials.materialsgroup' => function($query) {
+        $storeagesObj = Storages::with(array('hasMaterials.materials.materialsgroup' => function($query) {
                 $query->orderBy('material_groups.id', 'ASC');
-            }))->get();
+
+            }));
+        $list = ($user->isAdmin()) ? $storeagesObj->get() : $storeagesObj->where("id", "=",  Config::get('admin::custom.storage'))->get();
         if($storage_id > 0 && $material_id <= 0)
         {
 
@@ -267,17 +271,19 @@ class OperationsController extends BaseController {
 	 */
 	public function create()
 	{
-        $storages = Storages::all();
-        $events = StorageEvents::all();
+        $user = Auth::user();
+        $storages = ($user->isAdmin()) ? Storages::all() : Storages::where('id',  Config::get('admin::custom.storage'))->get();
+        $events = ($user->isAdmin()) ? StorageEvents::all() : StorageEvents::where('id',  Config::get('admin::custom.event'))->get();
         $storages_list = array("NULL" => "Нет") + $storages->lists('name', 'id');
         $events_list = array("NULL" => "Нет") + $events->lists('name', 'id');
         $materials_storage = array();
         $events_props = array();
-        $user_id = Auth::user()->id;
+
+        $user_id = $user->id;
 
         foreach($events as $event)
         {
-            if($event->properties)
+            if($event->char)
             {
                 foreach($event->properties as $data)
                 {
