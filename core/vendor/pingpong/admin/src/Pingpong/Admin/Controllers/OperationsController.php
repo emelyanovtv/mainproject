@@ -117,7 +117,7 @@ class OperationsController extends BaseController {
                     if(count($prodArr))
                     {
                         $material = StorageHasMaterial::find($prodArr['id']);
-                        $eventsForProduct = $material->events()->where('created_at', '>=', $dateStr."-01")->where('created_at', '<=', $dateStr."-".$dayInMonth)->get();
+                        $eventsForProduct = $material->events()->where('created_at', '>=', $dateStr."-01 00:00:01")->where('created_at', '<=', $dateStr."-".$dayInMonth." 23:59:59")->get();
 
                         if($eventsForProduct != null && count($eventsForProduct))
                         {
@@ -216,6 +216,7 @@ class OperationsController extends BaseController {
 
                             $firstDay = $d->modify('+1 month')->modify('first day of this month');
                             $lastDay = $l->modify('+1 month')->modify('last day of this month');
+
 
                             $materialCustom = StorageHasMaterial::find($prod['id']);
                             $eventsForProductIFNotExist = $materialCustom->events()->where('created_at', '>=', $firstDay->format("Y-m-d"))->where('created_at', '<=', $lastDay->format("Y-m-d"))->first();
