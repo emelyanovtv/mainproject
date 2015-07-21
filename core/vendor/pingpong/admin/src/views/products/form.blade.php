@@ -20,6 +20,10 @@
 		{{ Form::text('name', null, ['class' => 'form-control']) }}
 		{{ $errors->first('name', '<div class="text-danger">:message</div>') }}
 	</div>
+<div class="form-group">
+    {{ Form::label('is_disabled', 'Выключен:') }}
+    {{ Form::checkbox('is_disabled', '1', false, ['class' => 'checkbox']) }}
+</div>
     <div id="properties">
         @if(isset($model))
             @if(isset($material->materialsgroup->properties) && count($material->materialsgroup->properties))
