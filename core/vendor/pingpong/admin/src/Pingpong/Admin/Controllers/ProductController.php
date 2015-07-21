@@ -207,7 +207,7 @@ class ProductController extends BaseController {
                 $properties = (is_array($data['property'])) ? $data['property'] : [];
                 unset($data['property']);
             }
-
+            $data['is_disabled'] = (isset($data['is_disabled'])) ? intval($data['is_disabled']) : 0;
             $material->update($data);
 
             $rulesProps = array();
