@@ -9,7 +9,7 @@
 
 class Materials extends Model
 {
-    protected $fillable = ['name', 'material_group_id'];
+    protected $fillable = ['name', 'material_group_id', 'is_disabled'];
 
     protected $rules = [
         'name'	=>	'required',
