@@ -1,7 +1,6 @@
 <?php
 namespace Pingpong\Admin\Controllers;
 
-
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
@@ -382,7 +381,7 @@ class OperationsController extends BaseController {
 
             $boolIsAriphmetic = (boolean) $event->is_arifmetic;
 
-            $material = StorageHasMaterial::where(array('storage_id' => $data['storage_id'], 'material_id' => $data['material_id']))->first();
+            $material = StorageHasMaterial::with(array('materials'))->where(array('storage_id' => $data['storage_id'], 'material_id' => $data['material_id']))->first();
             $total = intval($material->total);
 
             if($boolIsAriphmetic)
@@ -399,6 +398,9 @@ class OperationsController extends BaseController {
                         $total = $total - (int) $data['value'];
                         break;
                 }
+
+
+                $this->checkMaterials($material, $total);
                 if($boolIStransfer)
                 {
                     $from_storage = Storages::find($data['storage_id']);
@@ -437,6 +439,69 @@ class OperationsController extends BaseController {
         }
 
 	}
+
+    /**
+     * Check quantity of material
+     *
+     * @param  object  $material
+     * @param  int  $total
+     * @return void
+     */
+    private function checkMaterials($material = null, $total = 0)
+    {
+        $materialConfig = Config::get('app.materialsConfig');
+        $reults = [];
+        $stotal = intval($material->total);
+        $bDisabled = ($stotal > 0 && $total <= 0) ? true : false;
+        $bEnabled = ($stotal <= 0 && $total > 0) ? true : false;
+        //Если это бумага или материал
+        if(in_array($material->materials->material_group_id, $materialConfig['group_ids']))
+        {
+            if(array_key_exists($material->material_id, $materialConfig['materials']) && ($bDisabled || $bEnabled ))
+            {
+                $arrParams = $materialConfig['materials'][$material->material_id];
+                $name = array_shift($arrParams);
+                $k = 0;
+                foreach($arrParams as $site => $value)
+                {
+                    $k++;
+                    $data = ['material_id' => $value, 'enabled' => $bEnabled];
+                    $url = "http://".$materialConfig['links'][$site];
+
+                    $data_string = json_encode($data);
+                    $result = file_get_contents($url, false, stream_context_create(array(
+                        'http' => array(
+                            'method' => 'POST',
+                            'header' => 'Content-Type: application/json' . "\r\n"
+                                . 'Content-Length: ' . strlen($data_string) . "\r\n",
+                            'content' => $data_string,
+                        ),
+                    )));
+
+                    if($k == 1)
+                    {
+                        $arrResp = json_decode(trim(str_replace("(", "", str_replace(")", "", $result))), true);
+                        if(isset($arrResp['value']['data']) && $arrResp['value']['data'] == "ok")
+                            $reults[] = $arrResp['value']['data'];
+                    }
+
+                    else
+                    {
+                        $arrResp = json_decode($result,1);
+                        if(isset($arrResp['status']['code']) && $arrResp['status']['code'] == "ok")
+                            $reults[] = $arrResp['status']['code'];
+                    }
+
+                }
+
+                if(count($reults) == count($arrParams))
+                    mail("emelyanovtv@gmail.com", $name." ".$bEnabled, "test");
+                else
+                    mail("emelyanovtv@gmail.com", "ошибка проведения операции", $name);
+            }
+        }
+        return true;
+    }
 
 
 	/**
