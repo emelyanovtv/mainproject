@@ -194,7 +194,6 @@ return array(
                 'www.fotooboi21.ru' => [32,37],
                 'www.fotooboi.ru' => [1275, 1263]
             ],
-
         ]
     ],
 
