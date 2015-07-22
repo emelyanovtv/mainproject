@@ -1,5 +1,6 @@
 <?php namespace Pingpong\Admin\Controllers;
 
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 use Pingpong\Admin\Entities\Materials;
 use Pingpong\Admin\Entities\MaterialGroup;
@@ -208,6 +209,10 @@ class ProductController extends BaseController {
                 unset($data['property']);
             }
             $data['is_disabled'] = (isset($data['is_disabled'])) ? intval($data['is_disabled']) : 0;
+
+            if((int) $material->is_disabled != $data['is_disabled'])
+                $this->checkMaterials($material, ($data['is_disabled'] == 0) ? true : false);
+
             $material->update($data);
 
             $rulesProps = array();
@@ -284,6 +289,66 @@ class ProductController extends BaseController {
             return $this->redirectNotFound();
         }
 	}
+
+    /**
+     * Check quantity of material
+     *
+     * @param  object  $material
+     * @param  int  $total
+     * @return void
+     */
+    private function checkMaterials($material = null, $bEnabled = false)
+    {
+        $materialConfig = Config::get('app.materialsConfig');
+        $reults = [];
+        //Если это бумага или материал
+        if(in_array($material->material_group_id, $materialConfig['group_ids']))
+        {
+            if(array_key_exists($material->id, $materialConfig['materials']))
+            {
+                $arrParams = $materialConfig['materials'][$material->id];
+                $name = array_shift($arrParams);
+                $k = 0;
+                foreach($arrParams as $site => $value)
+                {
+                    $k++;
+                    $data = ['material_id' => $value, 'enabled' => $bEnabled];
+                    $url = "http://".$materialConfig['links'][$site];
+
+                    $data_string = json_encode($data);
+                    $result = file_get_contents($url, false, stream_context_create(array(
+                        'http' => array(
+                            'method' => 'POST',
+                            'header' => 'Content-Type: application/json' . "\r\n"
+                                . 'Content-Length: ' . strlen($data_string) . "\r\n",
+                            'content' => $data_string,
+                        ),
+                    )));
+
+                    if($k == 1)
+                    {
+                        $arrResp = json_decode(trim(str_replace("(", "", str_replace(")", "", $result))), true);
+                        if(isset($arrResp['value']['data']) && $arrResp['value']['data'] == "ok")
+                            $reults[] = $arrResp['value']['data'];
+                    }
+
+                    else
+                    {
+                        $arrResp = json_decode($result,1);
+                        if(isset($arrResp['status']['code']) && $arrResp['status']['code'] == "ok")
+                            $reults[] = $arrResp['status']['code'];
+                    }
+
+                }
+
+                if(count($reults) == count($arrParams))
+                    mail("emelyanovtv@gmail.com", $name." ".$bEnabled, "test");
+                else
+                    mail("emelyanovtv@gmail.com", "ошибка проведения операции", $name);
+            }
+        }
+        return true;
+    }
 
 
 	/**
