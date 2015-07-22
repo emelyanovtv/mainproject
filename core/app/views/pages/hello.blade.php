@@ -25,6 +25,7 @@
                 <table class="table table-bordered table-hover">
                     <tbody>
                         @foreach ($dataArr as $storage => $items)
+                            @if (count($items) > 0)
                             <tr class="active"><td colspan="3"><h2 style="text-align: center;">{{$storage}}</h2></td></tr>
                             @foreach ($items as $item)
                                 <tr class="{{{ ($item->materials->is_disabled == '1') ? 'danger' : ((int)$item->total > 0) ? 'success' : 'warning' }}}">
@@ -43,6 +44,7 @@
                                     </td>
                                 </tr>
                             @endforeach
+                            @endif
                         @endforeach
                     </tbody>
 
