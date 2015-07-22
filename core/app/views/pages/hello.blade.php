@@ -29,7 +29,7 @@
                             <tr class="active"><td colspan="3"><h2 style="text-align: center;">{{$storage}}</h2></td></tr>
                             @foreach ($items as $item)
                                 <tr class="{{{ ($item->materials->is_disabled == '1') ? 'danger' : ((int)$item->total > 0) ? 'success' : 'warning' }}}">
-                                    <td>{{$item->materials->name}}</td>
+                                    <td>{{$materialConfig['materials'][$item->material_id]['name']}}</td>
                                     <td>Остаток : {{$item->total}}</td>
                                     <td>
                                         @if ($item->materials->is_disabled == '1')
