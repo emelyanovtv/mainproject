@@ -6,10 +6,10 @@
     <link rel="stylesheet" href="http://yastatic.net/bootstrap/3.3.4/css/bootstrap.min.css"/>
     <script type="text/javascript" src="http://yastatic.net/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <style>
-        table tr.danger{color:#FC0000};
-        table tr.success{color: #0BFC1E}
-        table tr.warning{color: #FCEF0B}
-        table tr.active{color: #a1a1a1}
+        table tr.danger{background-color:#FC0000};
+        table tr.success{background-color: #0BFC1E}
+        table tr.warning{background-color: #FCEF0B}
+        table tr.active{background-color: #a1a1a1}
 
 
     </style>
