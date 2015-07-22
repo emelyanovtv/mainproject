@@ -33,7 +33,8 @@ class HomeController extends BaseController {
                 }
             }
         }
-        return View::make('pages.hello', compact('dataArr'));
+        //echo "<pre>";var_dump($materialConfig);echo "</pre>";die();
+        return View::make('pages.hello', compact('dataArr','materialConfig'));
 	}
 
 }
