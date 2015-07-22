@@ -67,6 +67,134 @@ return array(
 
 	'fallback_locale' => 'ru',
 
+    /*
+	|--------------------------------------------------------------------------
+	| SPECIAL RELATIONS BY MATERIALS ON BOTH SITES
+	|--------------------------------------------------------------------------
+	|
+	| The fallback locale determines the locale to use when the current one
+	| is not available. You may change the value to correspond to any of
+	| the language folders that are provided through your application.
+	|
+	*/
+    'materialsConfig' => [
+        'group_ids' => [2,11,8],
+        'materials' => [
+            '1' => [
+                'name' => 'Штукатурка',
+                'www.fotooboi21.ru' => [14],
+                'www.fotooboi.ru' => [1266]
+            ],
+//            '3' => [
+//                'name' => 'Матовый песок',
+//                'www.fotooboi21.ru' => '14',
+//                'fotooboi' => '1266'
+//            ],
+            '4' => [
+                'name' => 'Крафт',
+                'www.fotooboi21.ru' => [38],
+                'www.fotooboi.ru' => [1269]
+            ],
+            '5' => [
+                'name' => 'Холст',
+                'www.fotooboi21.ru' => [11],
+                'www.fotooboi.ru' => [1268]
+            ],
+            '6' => [
+                'name' => 'Живопись маслом',
+                'www.fotooboi21.ru' => [26],
+                'www.fotooboi.ru' => [1264]
+            ],
+            '7' => [
+                'name' => 'Классическая штукатурка',
+                'www.fotooboi21.ru' => [29],
+                'www.fotooboi.ru' => [1267]
+            ],
+            '8' => [
+                'name' => 'Венеция',
+                'www.fotooboi21.ru' => [15],
+                'www.fotooboi.ru' => [1276]
+            ],
+            '9' => [
+                'name' => 'Антика',
+                'www.fotooboi21.ru' => [31],
+                'www.fotooboi.ru' => [1277]
+            ],
+            '51' => [
+                'name' => 'Лен',
+                'www.fotooboi21.ru' => [12],
+                'www.fotooboi.ru' => [1265]
+            ],
+            '56' => [
+                'name' => 'Жаккард',
+                'www.fotooboi21.ru' => [50],
+                'www.fotooboi.ru' => [7127]
+            ],
+            '56' => [
+                'name' => 'Прованс',
+                'www.fotooboi21.ru' => [41],
+                'www.fotooboi.ru' => [2651]
+            ],
+            '15' => [
+                'name' => 'Санторини',
+                'www.fotooboi21.ru' => [42],
+                'www.fotooboi.ru' => [2901]
+            ],
+            '49' => [
+                'name' => 'Сицилия',
+                'www.fotooboi21.ru' => [47],
+                'www.fotooboi.ru' => [3643]
+            ],
+            '50' => [
+                'name' => 'Ницца',
+                'www.fotooboi21.ru' => [49],
+                'www.fotooboi.ru' => [3647]
+            ],
+            '52' => [
+                'name' => 'Эконом',
+                'www.fotooboi21.ru' => [43],
+                'fotooboi' => [3633]
+            ],
+            '54' => [
+                'name' => 'Корсика',
+                'www.fotooboi21.ru' => [48],
+                'www.fotooboi.ru' => [3646]
+            ],
+            '16' => [
+                'name' => 'Сатин',
+                'www.fotooboi21.ru' => [13],
+                'www.fotooboi.ru' => [1272]
+            ],
+            '18' => [
+                'name' => 'Виниловые-матовые',
+                'www.fotooboi21.ru' => [27],
+                'www.fotooboi.ru' => [1270]
+            ],
+            '21' => [
+                'name' => 'Глянцевые',
+                'www.fotooboi21.ru' => [28],
+                'www.fotooboi.ru' => [1271]
+            ],
+            '22' => [
+                'name' => 'Гранит(ламинация)',
+                'www.fotooboi21.ru' => [36,34],
+                'www.fotooboi.ru' => [1274, 1262]
+            ],
+            '24' => [
+                'name' => 'Папирус',
+                'www.fotooboi21.ru' => [33,35],
+                'www.fotooboi.ru' => [1273, 1261]
+            ],
+            '35' => [
+                'name' => 'Саламандра',
+                'www.fotooboi21.ru' => [32,37],
+                'www.fotooboi.ru' => [1275, 1263]
+            ],
+
+        ]
+    ],
+
+
 	/*
 	|--------------------------------------------------------------------------
 	| Encryption Key
