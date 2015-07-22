@@ -89,11 +89,11 @@ return array(
                 'www.fotooboi21.ru' => [14],
                 'www.fotooboi.ru' => [1266]
             ],
-            '3' => [
-                'name' => 'Матовый песок',
-                'www.fotooboi21.ru' => [14],
-                'fotooboi' => [1266]
-            ],
+//            '3' => [
+//                'name' => 'Матовый песок',
+//                'www.fotooboi21.ru' => [14],
+//                'fotooboi' => [1266]
+//            ],
             '4' => [
                 'name' => 'Крафт',
                 'www.fotooboi21.ru' => [38],
