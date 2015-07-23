@@ -32,25 +32,28 @@
         <div class="row">
                 <table class="table table-bordered table-hover">
                     <tbody>
-                        @foreach ($dataArr as $storage => $items)
-                            @if (count($items) > 0)
+                        @foreach ($dataArr as $storage => $itemsGroup)
+                            @if (count($itemsGroup) > 0)
                             <tr class="active"><td colspan="3"><h2 style="text-align: center;">{{$storage}}</h2></td></tr>
-                            @foreach ($items as $item)
-                                <tr class="{{{ ($item->materials->is_disabled == '1') ? 'danger' : ((int)$item->total > 0) ? 'success' : 'warning' }}}">
-                                    <td>{{$materialConfig['materials'][$item->material_id]['name']}}</td>
-                                    <td>Остаток : {{$item->total}}</td>
-                                    <td>
-                                        @if ($item->materials->is_disabled == '1')
-                                            Не доступен
-                                        @else
-                                            @if ((int) $item->total > 0)
-                                                Доступен
-                                            @else
+                            @foreach ($itemsGroup as $group => $items)
+                            <tr class="active"><td colspan="3" align="center"><span style="text-align: center;">{{$group}}</span></td></tr>
+                                 @foreach ($items as $item)
+                                    <tr class="{{{ ($item->materials->is_disabled == '1') ? 'danger' : ((int)$item->total > 0) ? 'success' : 'warning' }}}">
+                                        <td>{{$materialConfig['materials'][$item->material_id]['name']}}</td>
+                                        <td>Остаток : {{$item->total}}</td>
+                                        <td>
+                                            @if ($item->materials->is_disabled == '1')
                                                 Не доступен
+                                            @else
+                                                @if ((int) $item->total > 0)
+                                                    Доступен
+                                                @else
+                                                    Не доступен
+                                                @endif
                                             @endif
-                                        @endif
-                                    </td>
-                                </tr>
+                                        </td>
+                                    </tr>
+                                @endforeach
                             @endforeach
                             @endif
                         @endforeach
