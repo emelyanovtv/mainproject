@@ -27,13 +27,13 @@ class HomeController extends BaseController {
                 {
                     if(in_array($item->materials->material_group_id,$materialConfig['group_ids']) && array_key_exists($item->materials->id, $materialConfig['materials']))
                     {
-                        $dataArr[$storage->name][] = $item;
+                        $dataArr[$storage->name][$item->materials->materialsgroup->name][] = $item;
                     }
 
                 }
             }
         }
-        //echo "<pre>";var_dump($materialConfig);echo "</pre>";die();
+        //echo "<pre>";var_dump($dataArr);echo "</pre>";die();
         return View::make('pages.hello', compact('dataArr','materialConfig'));
 	}
 
