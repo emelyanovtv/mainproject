@@ -134,7 +134,7 @@ return array(
                 'www.fotooboi21.ru' => [50],
                 'www.fotooboi.ru' => [7127]
             ],
-            '56' => [
+            '14' => [
                 'name' => 'Прованс',
                 'www.fotooboi21.ru' => [41],
                 'www.fotooboi.ru' => [2651]
@@ -157,7 +157,7 @@ return array(
             '52' => [
                 'name' => 'Эконом',
                 'www.fotooboi21.ru' => [43],
-                'www.fotooboi.ru' => [3633]
+                'fotooboi' => [3633]
             ],
             '54' => [
                 'name' => 'Корсика',
@@ -194,6 +194,7 @@ return array(
                 'www.fotooboi21.ru' => [32,37],
                 'www.fotooboi.ru' => [1275, 1263]
             ],
+
         ]
     ],
 
