@@ -78,7 +78,7 @@ return array(
 	|
 	*/
     'materialsConfig' => [
-        'group_ids' => [2,11,8],
+        'group_ids' => [2,11,8,3],
         'links' => [
             'www.fotooboi21.ru' => 'www.fotooboi21.ru/wsdl/api.php?action=toggleMaterials&type=web&version=1.0',
             'www.fotooboi.ru' => 'www.fotooboi.ru/wsdl/api.php?action=ToggleMaterials&login=megaplan&pass=Fotooboi2015&type=BitrixApi&version=0.1',
@@ -157,7 +157,7 @@ return array(
             '52' => [
                 'name' => 'Эконом',
                 'www.fotooboi21.ru' => [43],
-                'fotooboi' => [3633]
+                'www.fotooboi.ru' => [3633]
             ],
             '54' => [
                 'name' => 'Корсика',
