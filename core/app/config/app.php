@@ -89,11 +89,11 @@ return array(
                 'www.fotooboi21.ru' => [14],
                 'www.fotooboi.ru' => [1266]
             ],
-//            '3' => [
-//                'name' => 'Матовый песок',
+            '3' => [
+                'name' => 'Матовый песок',
 //                'www.fotooboi21.ru' => [14],
 //                'fotooboi' => [1266]
-//            ],
+            ],
             '4' => [
                 'name' => 'Крафт',
                 'www.fotooboi21.ru' => [38],
@@ -134,36 +134,36 @@ return array(
                 'www.fotooboi21.ru' => [50],
                 'www.fotooboi.ru' => [7127]
             ],
-//            '14' => [
-//                'name' => 'Прованс',
+            '14' => [
+                'name' => 'Прованс',
 //                'www.fotooboi21.ru' => [41],
 //                'www.fotooboi.ru' => [2651]
-//            ],
-//            '15' => [
-//                'name' => 'Санторини',
+            ],
+            '15' => [
+                'name' => 'Санторини',
 //                'www.fotooboi21.ru' => [42],
 //                'www.fotooboi.ru' => [2901]
-//            ],
-//            '49' => [
-//                'name' => 'Сицилия',
+            ],
+            '49' => [
+                'name' => 'Сицилия',
 //                'www.fotooboi21.ru' => [47],
 //                'www.fotooboi.ru' => [3643]
-//            ],
-//            '50' => [
-//                'name' => 'Ницца',
+            ],
+            '50' => [
+                'name' => 'Ницца',
 //                'www.fotooboi21.ru' => [49],
 //                'www.fotooboi.ru' => [3647]
-//            ],
-//            '52' => [
-//                'name' => 'Эконом',
+            ],
+            '52' => [
+                'name' => 'Эконом',
 //                'www.fotooboi21.ru' => [43],
 //                'www.fotooboi.ru' => [3633]
-//            ],
-//            '54' => [
-//                'name' => 'Корсика',
+            ],
+            '54' => [
+                'name' => 'Корсика',
 //                'www.fotooboi21.ru' => [48],
 //                'www.fotooboi.ru' => [3646]
-//            ],
+            ],
             '16' => [
                 'name' => 'Сатин',
                 'www.fotooboi21.ru' => [13],
