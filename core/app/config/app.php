@@ -76,7 +76,7 @@ return array(
 	| is not available. You may change the value to correspond to any of
 	| the language folders that are provided through your application.
 	|
-	*/
+	*/ 
     'materialsConfig' => [
         'group_ids' => [2,11,8,3],
         'links' => [
