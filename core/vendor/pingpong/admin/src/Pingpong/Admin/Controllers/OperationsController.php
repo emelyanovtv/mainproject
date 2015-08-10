@@ -462,35 +462,38 @@ class OperationsController extends BaseController {
                 $arrParams = $materialConfig['materials'][$material->material_id];
                 $name = array_shift($arrParams);
                 $k = 0;
-                foreach($arrParams as $site => $value)
+                if(count($arrParams) > 0)
                 {
-                    $k++;
-                    $data = ['material_id' => $value, 'enabled' => $bEnabled];
-                    $url = "http://".$materialConfig['links'][$site];
-
-                    $data_string = json_encode($data);
-                    $result = file_get_contents($url, false, stream_context_create(array(
-                        'http' => array(
-                            'method' => 'POST',
-                            'header' => 'Content-Type: application/json' . "\r\n"
-                                . 'Content-Length: ' . strlen($data_string) . "\r\n",
-                            'content' => $data_string,
-                        ),
-                    )));
-
-                    if($k == 1)
+                    foreach($arrParams as $site => $value)
                     {
-                        $arrResp = json_decode(trim(str_replace("(", "", str_replace(")", "", $result))), true);
-                        if(isset($arrResp['value']['data']) && $arrResp['value']['data'] == "ok")
-                            $reults[] = $arrResp['value']['data'];
-                    }
-                    else
-                    {
-                        $arrResp = json_decode($result,1);
-                        if(isset($arrResp['status']['code']) && $arrResp['status']['code'] == "ok")
-                            $reults[] = $arrResp['status']['code'];
-                    }
+                        $k++;
+                        $data = ['material_id' => $value, 'enabled' => $bEnabled];
+                        $url = "http://".$materialConfig['links'][$site];
 
+                        $data_string = json_encode($data);
+                        $result = file_get_contents($url, false, stream_context_create(array(
+                            'http' => array(
+                                'method' => 'POST',
+                                'header' => 'Content-Type: application/json' . "\r\n"
+                                    . 'Content-Length: ' . strlen($data_string) . "\r\n",
+                                'content' => $data_string,
+                            ),
+                        )));
+
+                        if($k == 1)
+                        {
+                            $arrResp = json_decode(trim(str_replace("(", "", str_replace(")", "", $result))), true);
+                            if(isset($arrResp['value']['data']) && $arrResp['value']['data'] == "ok")
+                                $reults[] = $arrResp['value']['data'];
+                        }
+                        else
+                        {
+                            $arrResp = json_decode($result,1);
+                            if(isset($arrResp['status']['code']) && $arrResp['status']['code'] == "ok")
+                                $reults[] = $arrResp['status']['code'];
+                        }
+
+                    }
                 }
             }
         }
