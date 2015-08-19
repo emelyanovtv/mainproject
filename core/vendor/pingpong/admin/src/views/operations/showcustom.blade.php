@@ -189,19 +189,20 @@ $(document).ready(function () {
 
     $('form').submit(function(){
         var storage_id = ($('#storage_id').val() == "all") ? $('#storage_id').val() : parseInt($('#storage_id').val());
-        var date = $('.form-group input[name=date]').val();
+        var date_from = $('.form-group input[name=date_from]').val();
+        var date_to = $('.form-group input[name=date_to]').val();
         var material_id = parseInt($('#material_id').val());
         var additional_url = "";
         if(storage_id > 0 || storage_id == "all")
             additional_url+= '/' + storage_id;
 
-        if(jQuery.trim(date).length)
-            additional_url+= '/' + date;
+        if(jQuery.trim(date_from).length && jQuery.trim(date_to).length)
+            additional_url+= '/' + date_from +'/' + date_to;
 
         if(material_id > 0)
             additional_url += '/' + material_id;
 
-        window.location = "{{URL::to('admin/operations/showoperations')}}" + additional_url;
+        window.location = "{{URL::to('admin/operations/customshowoperations')}}" + additional_url;
         return false;
     });
 
