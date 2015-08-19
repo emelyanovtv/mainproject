@@ -301,7 +301,6 @@ class OperationsController extends BaseController {
         $storagesArrData = array();
         $dataPlus = array();
         $storeagesObj = Storages::with(array('hasMaterials.materials.materialsgroup' => function($query) {
-                $query->where('material_groups.id', [2,11,8,3]);
                 $query->orderBy('material_groups.id', 'ASC');
 
             },'hasMaterials.materials.values.entetyprop.property' ));
@@ -445,32 +444,37 @@ class OperationsController extends BaseController {
                     }
 
                 }
+                $prodArrGroups = [2,11,8,3];
                 if(count($products))
                 {
                     $newProductArr = array();
                     foreach($products as $numS => $prod)
                     {
-                        $sq = 0;
-                        if(count($prod['materials']['values']) >= 2)
+                        if(in_array((int) $prod['materials']['material_group_id'], $prodArrGroups))
                         {
-                            $width = $prod['materials']['values'][0]['value'];
-                            $length = $prod['materials']['values'][1]['value'];
-                            $sq = $width*$length;
-                        }
-                        $totalValueInt = 0;
-                        if(isset($prod['events']["-"]) && count($prod['events']["-"]) > 0)
-                        {
-                            foreach($prod['events']["-"] as $event)
+                            $sq = 0;
+                            if(count($prod['materials']['values']) >= 2)
                             {
-                                $totalValueInt+= (int) $event['data']['value'];
+                                $width = $prod['materials']['values'][0]['value'];
+                                $length = $prod['materials']['values'][1]['value'];
+                                $sq = $width*$length;
                             }
-                        }
-                        if($sq > 0 && $totalValueInt > 0)
-                        {
+                            $totalValueInt = 0;
+                            if(isset($prod['events']["-"]) && count($prod['events']["-"]) > 0)
+                            {
+                                foreach($prod['events']["-"] as $event)
+                                {
+                                    $totalValueInt+= (int) $event['data']['value'];
+                                }
+                            }
+                            if($sq > 0 && $totalValueInt > 0)
+                            {
 
-                            $prod['expense'] = $sq*$totalValueInt;
+                                $prod['expense'] = $sq*$totalValueInt;
+                            }
+
+                            $newProductArr[$prod['materials']['materialsgroup']['name']][$numS] = $prod;
                         }
-                        $newProductArr[$prod['materials']['materialsgroup']['name']][$numS] = $prod;
                     }
 
                     $products = $newProductArr;
