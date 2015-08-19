@@ -68,7 +68,7 @@
                 @foreach($products as $num => $product)
                     <tr>
                         <td class="warning">{{$product['materials']['name']}}</td>
-                          <td>{{isset($product['expense']) ? $product['expense'] : ''}}</td>
+                          <td>{{isset($product['expense']) ? $product['expense'] : 'Нет'}}</td>
 
 
 
