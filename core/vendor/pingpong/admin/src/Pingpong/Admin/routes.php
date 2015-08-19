@@ -14,6 +14,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Pingpong\Admin\Controllers'],
 
 		// settings
 		Route::get('/operations/showoperations/{storage_id?}/{date?}/{material_id?}',  ['as' => 'admin.operations.showoperations',  'uses' => 'OperationsController@showoperations']);
+        Route::get('/operations/customshowoperations/{storage_id?}/{date_from?}/{date_to?}/{material_id?}',  ['as' => 'admin.operations.customshowoperations',  'uses' => 'OperationsController@customshowoperations']);
         Route::get('settings',  ['as' => 'admin.settings',  'uses' => 'SiteController@settings']);
 		Route::post('settings', ['as' => 'admin.settings.update',  'uses' => 'SiteController@updateSettings']);
 
