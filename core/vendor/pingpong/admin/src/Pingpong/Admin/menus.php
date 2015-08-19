@@ -44,6 +44,7 @@ Menu::create('admin-menu', function($menu)
         $sub->route('admin.operations.create', trans('menu.add_operation'));
         $sub->divider();
         $sub->route('admin.operations.showoperations', trans('menu.operations'));
+        $sub->route('admin.operations.customshowoperations', trans('menu.customoperations'));
     });
 
     $menu->check();
