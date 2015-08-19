@@ -269,12 +269,12 @@ class OperationsController extends BaseController {
         $storage_id = intval($storage_id);
         $user = Auth::user();
         $material_id = intval($material_id);
-        $dateFromStr = strval($date_from);
-        $dateToStr = strval($date_to);
+        $dateFrom = strval($date_from);
+        $dateTo = strval($date_to);
 
-        if(!strlen($dateFromStr))
+        if(!strlen($dateFrom))
             $dateFrom = date('Y-m', strtotime("-3 month"));
-        if(!strlen($dateToStr))
+        if(!strlen($dateTo))
             $dateTo = date('Y-m');
 
 
@@ -481,10 +481,9 @@ class OperationsController extends BaseController {
             }
         }
 
-        $data = compact('storages_list', 'materials_storage','dateFromStr','dateToStr','dayInMonth','storagesArrData');
+        $data = compact('storages_list', 'materials_storage','dateFrom','dateTo','dayInMonth','storagesArrData');
 
         $data = array_merge($data, $dataPlus);
-
         return $this->view('operations.showcustom', $data);
 
     }
