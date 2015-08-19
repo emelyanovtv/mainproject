@@ -30,7 +30,7 @@
     p {margin: 0px}
 </style>
 <h2>Операции</h2>
-{{ Form::open(['files' => true, 'method' => 'GET', 'route' => 'admin.operations.showoperations']) }}
+{{ Form::open(['files' => true, 'method' => 'GET', 'route' => 'admin.operations.customshowoperations']) }}
 <div class="form-group">
     {{ Form::label('storage_id', 'Склад:') }}
     {{ Form::select('storage_id', $storages_list, (isset($storage_id)) ? $storage_id : null, ['class' => 'form-control', 'onchange' => 'getHtmlByTypeAndID("materials", $(this).val())']) }}
