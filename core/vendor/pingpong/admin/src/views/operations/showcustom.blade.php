@@ -40,11 +40,11 @@
 <div id="materials" class="form-group"></div>
 <div class="form-group">
     {{ Form::label('date_from', 'Месяц:') }}
-    {{ Form::datetime("date_from", $dateFromStr) }}
+    {{ Form::datetime("date_from", $dateFrom) }}
 </div>
 <div class="form-group">
     {{ Form::label('date_to', 'Месяц:') }}
-    {{ Form::datetime("date_to", $dateToStr) }}
+    {{ Form::datetime("date_to", $dateTo) }}
 </div>
 <div class="form-group">
     {{ Form::submit('Показать', ['class' => 'btn btn-primary']) }}
