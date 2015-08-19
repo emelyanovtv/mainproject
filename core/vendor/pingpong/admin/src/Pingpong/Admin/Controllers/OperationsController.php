@@ -158,6 +158,8 @@ class OperationsController extends BaseController {
                     $products[$nump]['events'] = $events;
                 }
 
+
+
                 if(count($products))
                 {
                     foreach($products as $num => $prod)
@@ -258,6 +260,232 @@ class OperationsController extends BaseController {
         $data = array_merge($data, $dataPlus);
 
         return $this->view('operations.show', $data);
+
+    }
+
+
+    public function customshowoperations($storage_id = null, $date_from = null,  $date_to = null, $material_id = null)
+    {
+        $storage_id = intval($storage_id);
+        $user = Auth::user();
+        $material_id = intval($material_id);
+        $dateFromStr = strval($date_from);
+        $dateToStr = strval($date_to);
+
+        if(!strlen($dateFromStr))
+            $dateFrom = date('Y-m', strtotime("-3 month"));
+        if(!strlen($dateToStr))
+            $dateTo = date('Y-m');
+
+
+        //first case if we dont have not storage and material
+        $storages = ($user->isAdmin()) ? Storages::all() : Storages::where('id',  Config::get('admin::custom.storage'))->get();
+        $storages_list = array('all' => "Все") + $storages->lists("name", "id");
+        $materials_storage = array();
+
+        foreach($storages as $storage)
+        {
+            if($storage->hasMaterials)
+            {
+                foreach($storage->hasMaterials as $data)
+                {
+                    $materials_storage[$storage->id][null] = "Нет";
+                    $materials_storage[$storage->id][$data->materials->materialsgroup->name][$data->materials->id] = $data->materials->name;
+                }
+            }
+        }
+
+
+        $dateArr = explode("-", $dateTo);
+        $dayInMonth = cal_days_in_month(CAL_GREGORIAN, $dateArr[1], $dateArr[0]);
+        $storagesArrData = array();
+        $dataPlus = array();
+        $storeagesObj = Storages::with(array('hasMaterials.materials.materialsgroup' => function($query) {
+                $query->where('material_groups.id', [2,11,8,3]);
+                $query->orderBy('material_groups.id', 'ASC');
+
+            },'hasMaterials.materials.values.entetyprop.property' ));
+        $list = ($user->isAdmin()) ? $storeagesObj->get() : $storeagesObj->where("id", "=",  Config::get('admin::custom.storage'))->get();
+        if($storage_id > 0 && $material_id <= 0)
+        {
+
+            //custom data
+
+            $list = Storages::with(array('hasMaterials.materials.materialsgroup'))->where("id", "=", $storage_id)->get();
+            //custom
+            $dataPlus = compact('storage_id');
+
+        }
+        elseif($storage_id > 0 && $material_id > 0)
+        {
+            $list = Storages::with(array('hasMaterials' => function($query) use ($material_id)
+                    {
+                        $query->where('material_id', '=', $material_id);
+
+                    },
+                    'hasMaterials.materials.materialsgroup'
+                )
+            )->where("id", "=", $storage_id)->get();
+            $dataPlus = compact('storage_id','material_id');
+        }
+        foreach($list as $storage)
+        {
+
+            $storagesArrData[$storage->id] = array();
+
+            $storageMainData = $storage->toArray();
+            unset($storageMainData['has_materials']);
+
+            $storagesArrData[$storage->id]['data'] = $storageMainData;
+
+            if(count($storage->hasMaterials))
+            {
+                $products = array();
+                foreach($storage->hasMaterials as $nump => $product)
+                {
+                    $prodArr = $product->toArray();
+                    $events = array();
+                    if(count($prodArr))
+                    {
+                        $material = StorageHasMaterial::find($prodArr['id']);
+                        $eventsForProduct = $material->events()->where('created_at', '>=', $dateFrom."-01 00:00:01")->where('created_at', '<=', $dateTo."-".$dayInMonth." 23:59:59")->get();
+
+                        if($eventsForProduct != null && count($eventsForProduct))
+                        {
+                            foreach($eventsForProduct as $num => $eventData)
+                            {
+                                $dataArr = $eventData->toArray();
+                                $dateArrEvent = explode(" ", $dataArr['created_at']);
+                                $events[$num] = $eventData->toArray();
+                                $events[$num]['date'] = $dateArrEvent[0];
+                                if($eventValue = $eventData->event->load('eventData.properties.property.measure'))
+                                {
+                                    $dataArrSet = $eventValue->toArray();
+
+                                    if(isset($dataArrSet['data']) && strlen(trim($dataArrSet['data'])))
+                                        $dataArrSet['data'] = unserialize($dataArrSet['data']);
+                                    else
+                                        $dataArrSet['data'] = null;
+
+
+                                    if(isset($dataArrSet['event_data']['properties']) && count($dataArrSet['event_data']['properties']) && count($dataArrSet['data']))
+                                    {
+                                        foreach($dataArrSet['event_data']['properties'] as $number => $propData)
+                                        {
+                                            if(isset($propData['property']))
+                                                if(array_key_exists((int) $propData['property']['id'], $dataArrSet['data']))
+                                                    $dataArrSet['event_data']['properties'][$number]['property']['value'] = $dataArrSet['data'][$propData['property']['id']];
+                                        }
+                                    }
+
+
+                                    $events[$num]['data'] = $dataArrSet;
+                                }
+                            }
+
+                        }
+                    }
+
+                    $products[$nump] = $prodArr;
+                    $products[$nump]['events'] = $events;
+                }
+
+
+
+                if(count($products))
+                {
+                    foreach($products as $num => $prod)
+                    {
+                        if(isset($prod['events']) && count($prod['events']))
+                        {
+                            $lastEvent = $prod['events'][count($prod['events']) - 1];
+                            $total = $products[$num]['total_end'] = $products[$num]['total_begin'] = (int) $lastEvent['total_value'];
+
+                            foreach($prod['events'] as $eventNum => $eventDataArray)
+                            {
+                                if(isset($eventDataArray['data']['event_data']['char']))
+                                {
+                                    switch($eventDataArray['data']['event_data']['char'])
+                                    {
+                                        case "+":
+                                            $products[$num]['total_begin'] = $products[$num]['total_begin'] - (int) $eventDataArray['data']['value'];
+                                            break;
+                                        case "-":
+                                            $products[$num]['total_begin'] = $products[$num]['total_begin'] + (int) $eventDataArray['data']['value'];
+                                            break;
+                                        case "~":
+                                            if((int) $eventDataArray['data']['data']['from_storage']['id'] == (int) $eventDataArray['data']['storage_id'])
+                                            {
+                                                $prod['events'][$eventNum]['data']['event_data']['char'] = "-";
+                                                $products[$num]['total_begin'] = $products[$num]['total_begin'] + (int) $eventDataArray['data']['value'];
+                                            }
+                                            elseif((int) $eventDataArray['data']['data']['to_storage']['id'] == (int) $eventDataArray['data']['storage_id'])
+                                            {
+                                                $prod['events'][$eventNum]['data']['event_data']['char'] = "+";
+                                                $products[$num]['total_begin'] = $products[$num]['total_begin'] - (int) $eventDataArray['data']['value'];
+                                            }
+                                            break;
+
+                                    }
+                                }
+                            }
+
+                            $newEventsArr = array();
+                            foreach($prod['events'] as $eventPrepare)
+                            {
+                                if(isset($eventPrepare['data']['event_data']['char']) && strlen(trim($eventPrepare['data']['event_data']['char'])))
+                                    $newEventsArr[$eventPrepare['data']['event_data']['char']][] = $eventPrepare;
+                                else
+                                    $newEventsArr['custom'][] = $eventPrepare;
+                            }
+                            unset($products[$num]['events']);
+                            $products[$num]['events'] = $newEventsArr;
+                        }
+
+                    }
+
+                }
+                if(count($products))
+                {
+                    $newProductArr = array();
+                    foreach($products as $numS => $prod)
+                    {
+                        $sq = 0;
+                        if(count($prod['materials']['values']) >= 2)
+                        {
+                            $width = $prod['materials']['values'][0]['value'];
+                            $length = $prod['materials']['values'][1]['value'];
+                            $sq = $width*$length;
+                        }
+                        $totalValueInt = 0;
+                        if(isset($prod['events']["-"]) && count($prod['events']["-"]) > 0)
+                        {
+                            foreach($prod['events']["-"] as $event)
+                            {
+                                $totalValueInt+= (int) $event['data']['value'];
+                            }
+                        }
+                        if($sq > 0 && $totalValueInt > 0)
+                        {
+
+                            $prod['expense'] = $sq*$totalValueInt;
+                        }
+                        $newProductArr[$prod['materials']['materialsgroup']['name']][$numS] = $prod;
+                    }
+
+                    $products = $newProductArr;
+                }
+
+                $storagesArrData[$storage->id]['products'] = $products;
+                unset($products, $storage['has_materials']);
+            }
+        }
+
+        $data = compact('storages_list', 'materials_storage','dateFromStr','dateToStr','dayInMonth','storagesArrData');
+
+        $data = array_merge($data, $dataPlus);
+
+        return $this->view('operations.showcustom', $data);
 
     }
 
