@@ -19,6 +19,7 @@ return array(
     'properties' => 'Свойства',
     'storage' => 'Склады',
     'operations' => 'Операции',
+    'customoperations' => 'Показать расход',
     'add_operation' => 'Новая операция',
     'measures' => 'Список размерностей',
     'properties_list' => 'Список свойств',
