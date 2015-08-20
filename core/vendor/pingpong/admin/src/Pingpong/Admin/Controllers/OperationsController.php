@@ -461,7 +461,6 @@ class OperationsController extends BaseController {
                                 $sq = $width*$length;
                             }
                             $totalValueInt = 0;
-                            echo "<pre>";var_dump($prod);echo "</pre>";die();
                             if(isset($prod['events']["-"]) && count($prod['events']["-"]) > 0)
                             {
                                 foreach($prod['events']["-"] as $event)
@@ -469,6 +468,16 @@ class OperationsController extends BaseController {
                                     $totalValueInt+= (int) $event['data']['value'];
                                 }
                             }
+                            $totalValueBuy = 0;
+                            if(isset($prod['events']["+"]) && count($prod['events']["+"]) > 0)
+                            {
+                                foreach($prod['events']["+"] as $event)
+                                {
+                                    $totalValueBuy+= (int) $event['data']['event_data']['properties'][1]['property']['value'];
+                                }
+                            }
+                            if($totalValueBuy > 0)
+                                $prod['zakup'] = $totalValueBuy;
                             if($sq > 0 && $totalValueInt > 0)
                             {
 
