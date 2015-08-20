@@ -61,6 +61,7 @@
                 <tr class="info">
                     <td>Название продукта:</td>
                     <td>Расход за период:</td>
+                    <td>Закуплено на:</td>
                 </tr>
             </thead>
         @if(isset($storage['products']) && count($storage['products']))
@@ -69,10 +70,7 @@
                     <tr>
                         <td class="warning">{{$product['materials']['name']}}</td>
                           <td>{{isset($product['expense']) ? $product['expense'].' м2' : 'Нет'}}</td>
-
-
-
-
+                          <td>{{isset($product['zakup']) ? $product['zakup'].' руб.' : 'Нет'}}</td>
                     </tr>
                 @endforeach
             @endforeach
