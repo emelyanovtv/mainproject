@@ -266,6 +266,7 @@ class OperationsController extends BaseController {
 
     public function customshowoperations($storage_id = null, $date_from = null,  $date_to = null, $material_id = null)
     {
+        //echo "<pre>";var_dump($date_from);echo "</pre>";die();
         $storage_id = intval($storage_id);
         $user = Auth::user();
         $material_id = intval($material_id);
@@ -460,6 +461,7 @@ class OperationsController extends BaseController {
                                 $sq = $width*$length;
                             }
                             $totalValueInt = 0;
+                            echo "<pre>";var_dump($prod);echo "</pre>";die();
                             if(isset($prod['events']["-"]) && count($prod['events']["-"]) > 0)
                             {
                                 foreach($prod['events']["-"] as $event)
