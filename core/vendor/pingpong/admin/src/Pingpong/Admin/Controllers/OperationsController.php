@@ -478,6 +478,7 @@ class OperationsController extends BaseController {
                             }
                             if($totalValueBuy > 0)
                                 $prod['zakup'] = $totalValueBuy;
+
                             if($sq > 0 && $totalValueInt > 0)
                             {
 
@@ -697,7 +698,7 @@ class OperationsController extends BaseController {
         $bDisabled = ($stotal > 0 && $total <= 0) ? true : false;
         $bEnabled = ($stotal <= 0 && $total > 0) ? true : false;
         //Если это бумага или материал
-        if(in_array($material->materials->material_group_id, $materialConfig['group_ids']))
+        if(in_array($material->materials->material_group_id, $materialConfig['group_ids']) && (int) $material->materials->is_disabled == 0)
         {
             if(array_key_exists($material->material_id, $materialConfig['materials']) && ($bDisabled || $bEnabled ))
             {
