@@ -340,11 +340,6 @@ class ProductController extends BaseController {
                     }
 
                 }
-
-                if(count($reults) == count($arrParams))
-                    mail("emelyanovtv@gmail.com", $name." ".$bEnabled, "test");
-                else
-                    mail("emelyanovtv@gmail.com", "ошибка проведения операции", $name);
             }
         }
         return true;
