@@ -1,5 +1,6 @@
 /core/bootstrap/compiled.php
 /core/app/config/database.php
+/core/app/config/app.php
 composer.phar
 composer.lock
 .idea
