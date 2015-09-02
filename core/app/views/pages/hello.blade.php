@@ -38,8 +38,8 @@
                             @foreach ($itemsGroup as $group => $items)
                             <tr class="active"><td colspan="3" align="center"><span style="text-align: center;">{{$group}}</span></td></tr>
                                  @foreach ($items as $item)
-                                    <tr class="{{ (($item->materials->is_disabled == '1') ? 'danger' : ((int)$item->total > 0) ? 'success' : 'warning') }}">
-                                        <td>{{$materialConfig['materials'][$item->material_id]['name']}}</td>
+                                    <tr class="{{ (($item->materials->is_disabled == '1') ? 'danger' : ((int) $item->total > 0) ? 'success' : 'warning') }}">
+                                        <td>{{$materialConfig['materials'][$item->material_id]['name']}} {{$item->materials->is_disabled}}</td>
                                         <td>Остаток : {{$item->total}}</td>
                                         <td>
                                             @if ($item->materials->is_disabled == '1')
