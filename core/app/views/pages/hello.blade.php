@@ -32,7 +32,7 @@
         <div class="row">
                 <table class="table table-bordered table-hover">
                     <tbody>
-                        @foreach ($dataArr as $storage => $itemsGroup)
+                        @foreach ($dataArr as $storage => $itemsGroup)   
                             @if (count($itemsGroup) > 0)
                             <tr class="active"><td colspan="3"><h2 style="text-align: center;">{{$storage}}</h2></td></tr>
                             @foreach ($itemsGroup as $group => $items)
