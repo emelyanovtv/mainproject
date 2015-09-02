@@ -4,7 +4,11 @@
 	<meta charset="UTF-8">
 	<title>Laravel PHP Framework</title>
     <link rel="stylesheet" href="http://yastatic.net/bootstrap/3.3.4/css/bootstrap.min.css"/>
-
+    <style>
+        .table.table-bordered tr.error{
+            background: red;
+        }
+    </style>
 
 </head>
 <body>
@@ -30,7 +34,7 @@
 <section id="main" class="intro-section">
     <div class="container">
         <div class="row">
-                <table class="table table-bordered table-hover">
+                <table class="table table-bordered">
                     <tbody>
                         @foreach ($dataArr as $storage => $itemsGroup)
                             @if (count($itemsGroup) > 0)
