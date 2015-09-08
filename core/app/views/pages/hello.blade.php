@@ -44,10 +44,10 @@
                                  @foreach ($items as $item)
                                     <tr class="{{{ ($item->materials->is_disabled == 1) ? 'error' : ((intval($item->total) > 0) ? 'success' : 'warning') }}}">
                                         <td>{{$materialConfig['materials'][$item->material_id]['name']}}</td>
-                                        <td>Остаток : {{$item->total}} {{{ ($item->materials->is_disabled == 1) ? '' : ((intval($item->total) > 0) ? '' : 'Уточнить на складе') }}}</td>
+                                        <td>Остаток : {{$item->total}} </td>
                                         <td>
                                             @if ($item->materials->is_disabled == '1')
-                                                Не доступен
+                                                Не доступен {{{ ($item->materials->is_disabled == 1) ? '' : ((intval($item->total) > 0) ? '' : '(Уточнить на складе)') }}}
                                             @else
                                                 @if ((int) $item->total > 0)
                                                     Доступен
